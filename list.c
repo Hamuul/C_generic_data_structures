@@ -188,3 +188,38 @@ void *list_remove_next(list *self, node* elem)
     self->size -= 1;
     return data;
 }
+
+/**
+        * Removes the 'nth' element from the list.
+        *
+        * INPUT:
+        * 'list'		List were we operate changes.
+        * 'index'		The index of the element to be removed.
+        *
+        * RETURNS:
+        * NULL			If list is NULL, or empty.
+        * 'data'		The data retrieved from the popped node.
+        **/
+void *list_remove_index(list *self, unsigned int index)
+{
+    node *tmp = NULL;
+    void *data = NULL;
+    if(NULL == self || index > self->size)
+    {
+        return NULL;
+    }
+    if(index == 0)
+    {
+        data = list_remove_next(self, NULL);
+    }
+    else
+    {
+        unsigned int i = 0;
+        for(i = 0, tmp = self->head; i < index; ++i)
+        {
+            tmp = tmp->next;
+        }
+        data = list_remove_next(self, tmp);
+    }
+    return data;
+}
