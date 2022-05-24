@@ -154,6 +154,7 @@
         for( (iter) = (v)->length - 1; (iter) >= 0; --(iter))\
             (var) = (v)->data[(iter)];\
     }while(0)
+
 int vec_expand_(char **data, int *length, int *capacity, int memsz);
 int vec_reserve_(char **data, int *length, int *capacity, int memsz, int n);
 int vec_reserve_po2_(char **data, int *length, int *capacity, int memsz, int n);
