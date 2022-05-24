@@ -41,14 +41,14 @@ list *list_alloc(void (*destructor) (void *data))
         * INPUT :
         * 'self' -> pointer to the list wrapper for the list to be dealloced
         * OUTPUT:
-        * 0 if there is nothing to free, 1 if freeing was succesful
+        * -1 if there is nothing to free, 0 if freeing was succesful
 **/
 int list_free(list *self)
 {
     void *tmp;
     if(NULL == self || NULL == self->destructor)
     {
-        return 0;
+        return -1;
     }
     while(self->size > 0)
     {
@@ -58,5 +58,46 @@ int list_free(list *self)
         }
     }
     free(self);
-    return 1;
+    return 0;
+}
+
+/**
+        *Inserts a new node into a previously alloced list.
+        *If 'elem' is NULL, new_elem is inserted at head.
+        *INPUT:
+        *'self' -> pointer to list wrapper of the list in which we insert
+        *'elem' -> node after which insertion is made
+        *'data' -> data to which new node will point
+
+**/
+int list_insert_next(list *self, node *elem, const void *data)
+{
+    node *new_elem = NULL;
+    new_elem = (node *)calloc(1, sizeof(*new_elem));
+    if(self == NULL || new_elem == NULL)
+    {
+        return -1;
+    }
+    new_elem->data = (void *) data;
+    new_elem->next = NULL;
+    if(NULL == elem)
+    {
+        if(self->size == 0)
+        {
+             self->tail = new_elem;
+        }
+        new_elem->next = self->head;
+        self->head = new_elem;
+    }
+    else
+    {
+        if(elem->next = NULL)
+        {
+            self->tail = new_elem;
+        }
+        new_elem->next =  elem->next;
+        elem->next = new_elem;
+    }
+    self->size += 1;
+    return 0;
 }
