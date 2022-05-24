@@ -17,6 +17,59 @@ int vec_expand_(char **data, int *length, int *capacity, int memsz)
     return 0;
 }
 
+
+int vec_reserve_(char **data, int *length, int *capacity, int memsz, int n)
+{
+    (void) length;
+    if(n > *capacity)
+    {
+        void *ptr = realloc(*data, n * memsz);
+        if(ptr == NULL)
+        {
+            return -1;
+        }
+        *data = (char*) ptr;
+        *capacity = n;
+    }
+    return 0;
+}
+
+int vec_reserve_po2(char **data, int *length, int *capacity, int memsz, int n)
+{
+    int n2 = 1;
+    if(n == 0)
+    {
+        return 0;
+    }
+    while(n2 < n)
+    {
+        n2 <<= 1;
+    }
+    return vec_reserve_(data, length, capacity, memsz, n2);
+}
+int vec_compact_(char **data, int *length, int *capacity, int memsz)
+{
+    if(*length == 0)
+    {
+        free(*data);
+        *data = NULL;
+        *capacity = 0;
+        return 0;
+    }
+    else
+    {
+        void *ptr;
+        int n = *length;
+        ptr = realloc(*data, n * memsz);
+        if(ptr == NULL)
+        {
+            return -1;
+        }
+        *capacity = n;
+        *data = (char *) ptr;
+    }
+    return 0;
+}
 int vec_insert_(char **data, int *length, int *capacity, int memsz, int idx)
 {
   int err = vec_expand_(data, length, capacity, memsz);

@@ -38,10 +38,45 @@
 #define vec_swap(v, idx1, idx2)\
     vec_swap_(vec_unpack_(v), idx1, idx2)
 
+#define vec_truncate(v, len)\
+    ((v)->length = (len) < (v)->length ? (len) : (v)->length)
+
+
+#define vec_clear(v)\
+    ((v)->length = 0)
+
+
+#define vec_first(v)\
+    (v)->data[0]
+
+
+#define vec_last(v)\
+    (v)->data[(v)->length - 1]
+
+#define vec_reserve(v, n)\
+    vec_reserve_(v_unpack_(v), n)
+
+#define vec_compact(v)\
+    vec_compact_(vec_unpack_(v))
+
+
+#define vec_pusharr(v, arr, count)\
+do {\
+    int i__, n__ = (count);\
+    if (vec_reserve_po2_(vec_unpack_(v), (v)->length + n__) != 0) break;\
+    for (i__ = 0; i__ < n__; i__++)\
+    {\
+         (v)->data[(v)->length++] = (arr)[i__];\
+    }\
+} while (0)
+
 int vec_expand_(char **data, int *length, int *capacity, int memsz);
+int vec_reserve_(char **data, int *length, int *capacity, int memsz, int n);
 int vec_insert_(char **data, int *length, int *capacity, int memsz, int idx);
 void vec_splice_(char **data, int *length, int *capacity, int memsz,
                  int start, int count);
+void vec_swap_(char **data, int *length, int *capacity, int memsz,
+               int idx1, int idx2);
 
 typedef vec_t(void*) vec_void_t;
 typedef vec_t(char*) vec_str_t;
