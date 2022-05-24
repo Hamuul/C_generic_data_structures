@@ -61,14 +61,28 @@
 
 
 #define vec_pusharr(v, arr, count)\
-do {\
+  do {\
     int i__, n__ = (count);\
     if (vec_reserve_po2_(vec_unpack_(v), (v)->length + n__) != 0) break;\
     for (i__ = 0; i__ < n__; i__++)\
     {\
          (v)->data[(v)->length++] = (arr)[i__];\
     }\
-} while (0)
+  }while(0)
+
+#define vec_concat(v, v2)\
+  vec_pusharr((v), (v2)->data, (v2)->length)
+
+#define vec_find(v, val, idx)\
+  do {\
+      for((idx) = 0; (idx) < (v)->length; (idx)++)\
+      {\
+          if((v)->data[(idx)] == (val))\
+            break;\
+      }\
+      if ((idx) == (v)->length)\
+        (idx) = -1;\
+  }while(0)
 
 int vec_expand_(char **data, int *length, int *capacity, int memsz);
 int vec_reserve_(char **data, int *length, int *capacity, int memsz, int n);
