@@ -34,3 +34,27 @@ void vec_splice_(char **data, int *length, int *capacity, int memsz,
     memmove(*data + start * memsz, *data + (start + count) * memsz,
             (*length - start - count) * memsz);
 }
+
+void vec_swap_(char **data, int *length, int *capacity, int memsz,
+               int idx1, int idx2)
+{
+    unsigned char *a, *b, tmp;
+    int count;
+    (void) length;
+    (void) capacity;
+    if(idx1 == idx2)
+    {
+        return;
+    }
+    a = (unsigned char *) *data + idx1 * memsz;
+    b = (unsigned char *) *data + idx2 * memsz;
+    count = memsz;
+    while(count--)
+    {
+        tmp = *a;
+        *a = *b;
+        *b = tmp;
+        ++a;
+        ++b;
+    }
+}

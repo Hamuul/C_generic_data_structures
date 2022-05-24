@@ -32,6 +32,12 @@
     ( vec_insert_(vec_unpack_(v), idx)) ? -1 :\
       ((v)->data[idx] = (val), 0), (v)->length++, 0)
 
+#define vec_sort(v, cmp)\
+    qsort((v)->data, (v)->length, sizeof(*(v)->data), cmp)
+
+#define vec_swap(v, idx1, idx2)\
+    vec_swap_(vec_unpack_(v), idx1, idx2)
+
 int vec_expand_(char **data, int *length, int *capacity, int memsz);
 int vec_insert_(char **data, int *length, int *capacity, int memsz, int idx);
 void vec_splice_(char **data, int *length, int *capacity, int memsz,
