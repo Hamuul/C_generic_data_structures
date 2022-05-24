@@ -1,6 +1,6 @@
 #include "vec.h"
 
-int vec_expand_(char ** data, int *length, int *capacity, int memsz)
+int vec_expand_(char **data, int *length, int *capacity, int memsz)
 {
    if (*length + 1 > *capacity)
    {
@@ -15,4 +15,12 @@ int vec_expand_(char ** data, int *length, int *capacity, int memsz)
    *capacity = n;
     }
     return 0;
+}
+
+void vec_splice_(char **data, int *length, int *capacity, int memsz,
+                 int start, int count)
+{
+    (void) capacity;
+    memmove(*data + start * memsz, *data + (start + count) * memsz,
+            (*length - start - count) * memsz);
 }
