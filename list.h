@@ -1,6 +1,20 @@
 #ifndef LIST_H
 #define LIST_H
 
+struct node {
+	void *data;
+	struct node *next;
+};
+
+
+struct list {
+	void (*destructor)(void *data);
+	int (*cmp)(const void *e1, const void *e2);
+	unsigned int size;
+	struct node *head;
+	struct node *tail;
+};
+
 typedef struct node node;
 typedef struct list list;
 

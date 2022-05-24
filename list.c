@@ -1,20 +1,5 @@
 #include <stdlib.h>
-#include <assert.h>
 #include "list.h"
-
-struct node {
-	void *data;
-	struct node *next;
-};
-
-
-struct list {
-	void (*destructor)(void *data);
-	int (*cmp)(const void *e1, const void *e2);
-	unsigned int size;
-	struct node *head;
-	struct node *tail;
-};
 
 /**
         * Reserve memory for new linked list.
@@ -26,7 +11,7 @@ struct list {
 list *list_alloc(void (*destructor) (void *data))
 {
     list *self = NULL;
-    if( (self = (list *) calloc(1, sizeof(list *))) != NULL)
+    if( (self = (list *) calloc(1, sizeof(*self))) != NULL)
     {
         self->size = 0;
         self->destructor = destructor;
@@ -245,7 +230,12 @@ int list_purge_next(list *self, node *elem)
     return 0;
 }
 
-
+/**
+        *list_remove_index except it also frees popped node DATA
+        *RETURNS:
+        * 0 if purge (memory free by destructor call) was succesful
+        * -1 if purge failed
+**/
 int list_purge_index(list *self, unsigned int index)
 {
     void *data = NULL;
@@ -261,6 +251,14 @@ int list_purge_index(list *self, unsigned int index)
     return 0;
 }
 
+/**
+        *INPUT :
+        *'self' -> list to operate on
+        *'index' -> position from which to get node
+        *RETURNS:
+        * NULL if there is node node at the given index
+        * Pointer to the node at the given index otherwise
+**/
 node *list_get_node_at(list *self, unsigned int index)
 {
     node *tmp = NULL;
