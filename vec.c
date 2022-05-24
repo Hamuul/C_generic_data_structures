@@ -17,6 +17,16 @@ int vec_expand_(char **data, int *length, int *capacity, int memsz)
     return 0;
 }
 
+int vec_insert_(char **data, int *length, int *capacity, int memsz, int idx)
+{
+  int err = vec_expand_(data, length, capacity, memsz);
+  if (err) return err;
+  memmove(*data + (idx + 1) * memsz,
+          *data + idx * memsz,
+          (*length - idx) * memsz);
+  return 0;
+}
+
 void vec_splice_(char **data, int *length, int *capacity, int memsz,
                  int start, int count)
 {

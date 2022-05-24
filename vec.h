@@ -28,7 +28,12 @@
     ( vec_splice_(vec_unpack_(v), start, count)),\
       (v)->length -= count )
 
+#define vec_insert(v, idx, val)\
+    ( vec_insert_(vec_unpack_(v), idx)) ? -1 :\
+      ((v)->data[idx] = (val), 0), (v)->length++, 0)
+
 int vec_expand_(char **data, int *length, int *capacity, int memsz);
+int vec_insert_(char **data, int *length, int *capacity, int memsz, int idx);
 void vec_splice_(char **data, int *length, int *capacity, int memsz,
                  int start, int count);
 
