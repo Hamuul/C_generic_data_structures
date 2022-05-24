@@ -10,5 +10,6 @@ typedef list stack;
 
 int stack_push(stack* self, const void* data);
 void* stack_pop(stack* self);
+int stack_purge(stack *self);
 
 #endif
