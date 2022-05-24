@@ -47,6 +47,7 @@ int vec_reserve_po2(char **data, int *length, int *capacity, int memsz, int n)
     }
     return vec_reserve_(data, length, capacity, memsz, n2);
 }
+
 int vec_compact_(char **data, int *length, int *capacity, int memsz)
 {
     if(*length == 0)
