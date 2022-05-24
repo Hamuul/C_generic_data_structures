@@ -15,3 +15,13 @@ int stack_purge(stack *self)
 {
     return list_purge_next(self, NULL);
 }
+
+void *stack_peek(stack *self)
+{
+    return (self == NULL)? (NULL) : list_get_data(self->head);
+}
+
+unsigned int stack_size(stack *self)
+{
+    return list_size(self);
+}
