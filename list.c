@@ -16,7 +16,13 @@ struct list {
 	struct node *tail;
 };
 
-
+/**
+        * Reserve memory for new linked list.
+        * INPUT :
+        * 'destructor' -> user defined destructor for void* data
+        * OUTPUT:
+        * pointer to the new linked list wrapper struct or NULL (alloc error)
+**/
 list *list_alloc(void (*destructor) (void *data))
 {
     list *self = NULL;
@@ -27,5 +33,30 @@ list *list_alloc(void (*destructor) (void *data))
         self->head = NULL;
         self->tail = NULL;
     }
+    return self;
+}
 
+/**
+        * Deallocates memory used by linked list.
+        * INPUT :
+        * 'self' -> pointer to the list wrapper for the list to be dealloced
+        * OUTPUT:
+        * 0 if there is nothing to free, 1 if freeing was succesful
+**/
+int list_free(list *self)
+{
+    void *tmp;
+    if(NULL == self || NULL == self->destructor)
+    {
+        return 0;
+    }
+    while(self->size > 0)
+    {
+        if( (tmp = list_remove_next(self, NULL)) != NULL)
+        {
+            self->destructor(tmp);
+        }
+    }
+    free(self);
+    return 1;
 }
