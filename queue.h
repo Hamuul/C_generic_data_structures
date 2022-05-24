@@ -11,7 +11,7 @@ typedef list queue;
 int enqueue(queue *self, const void *data);
 void *dequeue(queue *self);
 int queue_purge(queue *self);
-void queue_peek(queue *self);
+void *queue_peek(queue *self);
 unsigned int queue_size(queue *self);
 
 #endif
