@@ -91,8 +91,19 @@
       if(idx != -1)\
         vec_splice(v, idx__, 1);\
   }while(0)
+
+#define vec_reverse(v)\
+    do {\
+        int i__ = (v)->length / 2;\
+        while(i__--)\
+        {\
+                vec_swap((v), i__, (v)->length - (i__ + 1));\
+        }\
+    }while(0)
+
 int vec_expand_(char **data, int *length, int *capacity, int memsz);
 int vec_reserve_(char **data, int *length, int *capacity, int memsz, int n);
+int vec_reserve_po2_(char **data, int *length, int *capacity, int memsz, int n);
 int vec_insert_(char **data, int *length, int *capacity, int memsz, int idx);
 void vec_splice_(char **data, int *length, int *capacity, int memsz,
                  int start, int count);
