@@ -260,3 +260,32 @@ int list_purge_index(list *self, unsigned int index)
     }
     return 0;
 }
+
+node *list_get_node_at(list *self, unsigned int index)
+{
+    node *tmp = NULL;
+    if(NULL == self || index > self->size)
+    {
+        return NULL;
+    }
+    unsigned int i;
+    for(i = 0, tmp = self->head; i < index; i++)
+    {
+        tmp = tmp->next;
+    }
+    return tmp;
+}
+
+int is_data_in_list(list *self, void *data)
+{
+    node *tmp = NULL;
+    unsigned int i;
+    for(i = 0, tmp = self->head; i < self->size; i++)
+    {
+        if(self->cmp(tmp->data, data) == 0)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
