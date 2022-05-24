@@ -13,4 +13,6 @@ int list_insert_index(list *self, unsigned int index, const void* data);
 void *list_remove_next(list *self, node *element);
 void *list_remove_index(list *self, unsigned int index);
 
+int list_purge_next(list *self, node* elem);
+int list_purge_index(list *self, unsigned int index);
 #endif

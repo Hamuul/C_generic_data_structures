@@ -141,7 +141,7 @@ int list_insert_index(list *self, unsigned int index, const void* data)
 
 /**
         * Pops the node after the specified node.
-        *
+        * CALLER MUST PROPERLY FREE POPPED NODE'S DATA (the returned pointer)
         * If element is NULL the current head is removed.
         *
         * INPUT:
@@ -190,8 +190,8 @@ void *list_remove_next(list *self, node* elem)
 }
 
 /**
-        * Removes the 'nth' element from the list.
-        *
+        * Pops the n-th node from the list.
+        * CALLER MUST PROPERLY FREE POPPED NODE'S DATA (the returned pointer)
         * INPUT:
         * 'list'		List were we operate changes.
         * 'index'		The index of the element to be removed.
@@ -222,4 +222,41 @@ void *list_remove_index(list *self, unsigned int index)
         data = list_remove_next(self, tmp);
     }
     return data;
+}
+
+/**
+        *list_remove_next except it also frees popped node DATA
+        *RETURNS:
+        * 0 if purge (memory free by destructor call) was succesful
+        * -1 if purge failed
+**/
+int list_purge_next(list *self, node *elem)
+{
+    void *data = NULL;
+    if(NULL == self || NULL == self->destructor)
+    {
+        return -1;
+    }
+    data = list_remove_next(self, elem);
+    if(data != NULL)
+    {
+        self->destructor(data);
+    }
+    return 0;
+}
+
+
+int list_purge_index(list *self, unsigned int index)
+{
+    void *data = NULL;
+    if(NULL == self ||  index > self->size || NULL == self->destructor)
+    {
+        return -1;
+    }
+    data = list_remove_index(self, index);
+    if(data != NULL)
+    {
+        self->destructor(data);
+    }
+    return 0;
 }
