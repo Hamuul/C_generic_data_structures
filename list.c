@@ -292,3 +292,8 @@ void *list_get_data(node *element)
 {
 	return (element == NULL) ? NULL : element->data;
 }
+
+unsigned int list_size(list *self)
+{
+	return (self == NULL) ? 0 : self->size;
+}
