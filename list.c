@@ -138,3 +138,53 @@ int list_insert_index(list *self, unsigned int index, const void* data)
     }
     return 0;
 }
+
+/**
+        * Pops the node after the specified node.
+        *
+        * If element is NULL the current head is removed.
+        *
+        * INPUT:
+        * 'list'		List were we operate changes.
+        * 'element'	The node at 'element->next' will be removed, and
+        * its data will be returned.
+        * RETURNS:
+        * NULL			If list is NULL, or empty.
+        * 'data'		The data retrieved from the popped node.
+ **/
+void *list_remove_next(list *self, node* elem)
+{
+    void *data = NULL;
+    node *old_elem = NULL;
+    if(NULL == self ||  self->size == 0)
+    {
+        return NULL;
+    }
+    if(elem == NULL)
+    {
+        data = self->head->data;
+        old_elem = self->head;
+        self->head = self->head->next;
+        if(self->size == 1)
+        {
+            self->tail = NULL;
+        }
+    }
+    else
+    {
+        if(elem->next == NULL)
+        {
+            return NULL;
+        }
+        data = elem->next->data;
+        old_elem = elem->next;
+        elem->next = old_elem->next;
+        if(elem->next == NULL)
+        {
+            self->tail = elem;
+        }
+    }
+    free(old_elem);
+    self->size -= 1;
+    return data;
+}
