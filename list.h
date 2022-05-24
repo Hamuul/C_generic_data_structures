@@ -32,4 +32,6 @@ int list_purge_index(list *self, unsigned int index);
 
 node *list_get_node_at(list *self, unsigned int index);
 int is_data_in_list(list *self, void *data);
+
+void *list_get_data(node *element);
 #endif

@@ -287,3 +287,8 @@ int is_data_in_list(list *self, void *data)
     }
     return 0;
 }
+
+void *list_get_data(node *element)
+{
+	return (element == NULL) ? NULL : element->data;
+}
