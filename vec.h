@@ -84,6 +84,13 @@
         (idx) = -1;\
   }while(0)
 
+#define vec_remove(v, val)\
+  do {\
+      int idx__;\
+      vec_find(v, val, idx__);\
+      if(idx != -1)\
+        vec_splice(v, idx__, 1);\
+  }while(0)
 int vec_expand_(char **data, int *length, int *capacity, int memsz);
 int vec_reserve_(char **data, int *length, int *capacity, int memsz, int n);
 int vec_insert_(char **data, int *length, int *capacity, int memsz, int idx);
