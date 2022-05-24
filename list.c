@@ -91,7 +91,7 @@ int list_insert_next(list *self, node *elem, const void *data)
     }
     else
     {
-        if(elem->next = NULL)
+        if(elem->next == NULL)
         {
             self->tail = new_elem;
         }
@@ -99,5 +99,42 @@ int list_insert_next(list *self, node *elem, const void *data)
         elem->next = new_elem;
     }
     self->size += 1;
+    return 0;
+}
+
+/**
+        * Inserts a new element into the list at the specified index.
+        *
+        * INPUT:3
+        * 'list'		List were we operate changes.
+        * 'index'		Were to insert new element.
+        * 'data'		Data to be inserted into the list
+        *
+        * RETURNS:
+        * 0			If insertion was succesful.
+        * -1			If the insertion wasn't succesful.
+        * 				('list' is NULL, memory allocation failed for new
+        * 				element).
+ **/
+int list_insert_index(list *self, unsigned int index, const void* data)
+{
+    node* tmp = NULL;
+    if(NULL == self || index > self->size)
+    {
+        return -1;
+    }
+    if(index == 0)
+    {
+        list_insert_next(self, NULL, data);
+    }
+    else
+    {
+        unsigned i;
+        for(i = 0, tmp = self->head; i < index; ++i)
+        {
+            tmp = tmp->next;
+        }
+        list_insert_next(self, tmp, data);
+    }
     return 0;
 }
