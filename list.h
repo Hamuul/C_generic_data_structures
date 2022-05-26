@@ -18,7 +18,8 @@ struct list {
 typedef struct node node;
 typedef struct list list;
 
-list *list_alloc(void (*destructor)(void *data));
+list *list_alloc(void (*destructor)(void *data),
+                 int (*cmp)(const void *e1, const void *e2));
 int list_free(list *self);
 
 int list_insert_next(list *self, node *element, const void *data);

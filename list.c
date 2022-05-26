@@ -8,13 +8,15 @@
         * OUTPUT:
         * pointer to the new linked list wrapper struct or NULL (alloc error)
 **/
-list *list_alloc(void (*destructor) (void *data))
+list *list_alloc(void (*destructor) (void *data),
+                 int (*cmp)(const void *e1, const void *e2))
 {
     list *self = NULL;
     if( (self = (list *) calloc(1, sizeof(*self))) != NULL)
     {
         self->size = 0;
         self->destructor = destructor;
+        self->cmp = cmp;
         self->head = NULL;
         self->tail = NULL;
     }

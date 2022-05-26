@@ -22,6 +22,15 @@ void destructor(void *self)
     free(tmp->children.second);
 }
 
+int cmp(const void *e1, const void *e2)
+{
+    person *p1 = (person*) e1;
+    person *p2 = (person*) e2;
+    return (strcmp(p1->name, p2->name) == 0) && (strcmp(p1->SSN, p2->SSN) == 0)
+            && (p1->weight == p2->weight) && (p1->height = p2->height)
+            && strcmp(p1->children.first, p2->children.first) == 0
+            && strcmp(p1->children.second, p2->children.second) == 0;
+}
 char *my_strdup(char *src)
 {
     char *dest = (char *) calloc(strlen(src) + 1, sizeof(char));
@@ -36,7 +45,7 @@ int main(void)
 {
     list my_list;
     list* lptr = &my_list;
-    lptr = list_alloc(destructor);
+    lptr = list_alloc(destructor, cmp);
     person dorel;
     dorel.name = my_strdup("dorel");
     dorel.SSN = my_strdup("32543544364365");
