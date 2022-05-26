@@ -21,4 +21,14 @@ bintree *bintree_alloc(void (*destructor)(void *data),
 int bintree_purge_right(bintree *tree, node *treenode);
 int bintree_purge_left(bintree *tree, node *treenode);
 
+int bintree_free(bintree *tree);
+
+int bintree_add_left(bintree *tree, node *treenode, const void *data);
+int bintree_add_right(bintree *tree, node *treenode, const void *data);
+
+bintree *bintree_merge(bintree *leftree, bintree *rightree,
+                           void (*destructor)(void *val),
+                           int (*cmp)(const void *e1, const void *e2),
+                           const void *data);
+
 #endif
