@@ -15,6 +15,7 @@ struct bintree{
 };
 
 typedef bintree_node node;
-typedef bintree tree;
 
+bintree *bintree_alloc(void (*destructor)(void *data),
+                     int (*cmp) (const void* e1, const void *e2));
 #endif
